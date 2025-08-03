@@ -1,7 +1,7 @@
+# Petshop
+
+Um projeto de um petshop
+
 ## Sujeito Programador
 
-Canal de conteúdo de programação.
-
-### Landing Page Petshop
-
-Landing page de um petshop.
+A fonte desse projeto é o Canal de conteúdo de programação. 
