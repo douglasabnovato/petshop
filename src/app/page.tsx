@@ -1,3 +1,4 @@
+/* Página inicial: hero, sobre, serviços, depoimentos e rodapé */
 import { About } from "./_components/about";
 import { Footer } from "./_components/footer";
 import { Hero } from "./_components/hero";
@@ -6,12 +7,15 @@ import { Testimonials } from "./_components/testimonials";
 
 export default function Home() {
   return (
-    <main>
-      <Hero />
-      <About />
-      <Services />
-      <Testimonials />
+    <>
+      <main id="conteudo">
+        <Hero />
+        <About />
+        <Services />
+        <Testimonials />
+      </main>
       <Footer />
-    </main>
-  )
+    </>
+  );
 }
+/* Fim de page.tsx */
