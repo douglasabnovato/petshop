@@ -1,13 +1,13 @@
-> **Projeto de estudo.** Estado conferido em 30/10/2026: 1 endereço(s) citado(s) abaixo não responde(m). Detalhes em [docs/AVALIACAO.md](docs/AVALIACAO.md) e próximos passos em [docs/PLANO-ESTRATEGICO.md](docs/PLANO-ESTRATEGICO.md).
+> **Projeto de estudo.** Estado conferido em 31/10/2026: os endereços que seguem fora do ar foram retirados deste README. Detalhes em [docs/AVALIACAO.md](docs/AVALIACAO.md) e próximos passos em [docs/PLANO-ESTRATEGICO.md](docs/PLANO-ESTRATEGICO.md).
 
 # Petshop Dev
 
 Landing page de um pet shop (projeto de estudo baseado no canal Sujeito Programador): apresentação, serviços com contato direto pelo WhatsApp, depoimentos, marcas e contatos.
 
-## Em produção
+## Publicação
 
-- URL: https://douglasabnovato.github.io/petshop/
-- Hospedagem: GitHub Pages (gratuito), publicado pelo GitHub Actions a cada push na `main`
+- Fora do ar desde a conferência de 31/10/2026; para ver o projeto, rode localmente (seção "Como executar").
+- Hospedagem prevista: GitHub Pages (gratuito), publicado pelo GitHub Actions a cada push na `main`
 - Passo a passo: [docs/DEPLOY.md](docs/DEPLOY.md)
 
 ## Stack
