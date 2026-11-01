@@ -4,6 +4,15 @@
 
 Landing page de um pet shop (projeto de estudo baseado no canal Sujeito Programador): apresentação, serviços com contato direto pelo WhatsApp, depoimentos, marcas e contatos.
 
+## 🧠 O que aprendi
+
+> Proposta de 01/11/2026, escrita a partir do código e das dependências. Ajuste com a sua experiência.
+
+- Construir uma landing page com Next.js e Tailwind CSS.
+- Criar carrosséis com Embla e animações com AOS.
+- Compor componentes com Radix e `class-variance-authority`.
+- Isolar a geração do link do WhatsApp e testá-la com Vitest.
+
 ## Publicação
 
 - Fora do ar desde a conferência de 31/10/2026; para ver o projeto, rode localmente (seção "Como executar").
