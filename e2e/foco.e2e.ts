@@ -1,4 +1,4 @@
-/* Foco visível nas tabulações e axe (WCAG 2.2 AA, inclui contraste), no navegador real */
+/* Foco visível nas tabulações, axe (WCAG 2.2 AA, inclui contraste), perguntas frequentes e dados estruturados, no navegador real */
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
@@ -41,4 +41,20 @@ for (const rota of ["./", "./sobre/", "./contatos/"]) {
   });
 }
 
+test("perguntas frequentes abrem pelo teclado", async ({ page }) => {
+  await page.goto("./");
+  const resumo = page.locator("#faq-duracao summary");
+  await resumo.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#faq-duracao")).toHaveAttribute("open", "");
+  await expect(page.getByText("Em média 1 hora.")).toBeVisible();
+});
+
+test("a página traz dados estruturados PetStore válidos", async ({ page }) => {
+  await page.goto("./");
+  const json = await page.locator('script[type="application/ld+json"]').first().textContent();
+  const d = JSON.parse(json || "{}");
+  expect(d["@type"]).toBe("PetStore");
+  expect(d.openingHours).toEqual(["Mo-Sa 08:00-18:00"]);
+});
 /* Fim de foco.e2e.ts */

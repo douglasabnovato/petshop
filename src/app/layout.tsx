@@ -1,9 +1,10 @@
-/* Layout raiz: idioma pt-BR, metadados de SEO/redes sociais, fonte Geist local (sem depender do Google Fonts no build) */
+/* Layout raiz: idioma pt-BR, metadados de SEO/redes sociais, dados estruturados PetStore, fonte Geist local (sem depender do Google Fonts no build) */
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { AosInit } from "./_components/aos-init";
 import { site } from "../config/site";
+import { jsonLdScript, petStoreJsonLd } from "../lib/jsonld";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         {children}
         <AosInit />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(petStoreJsonLd()) }} />
       </body>
     </html>
   );
