@@ -23,6 +23,8 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.65.0",
     "@types/aos": "^3.0.7",
     "@types/node": "^22.20.4",
     "@types/react": "^19",
