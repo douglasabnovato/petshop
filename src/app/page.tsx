@@ -1,5 +1,6 @@
-/* Página inicial: hero, sobre, serviços, depoimentos e rodapé */
+/* Página inicial: hero, sobre, serviços, perguntas frequentes, depoimentos e rodapé */
 import { About } from "./_components/about";
+import { Faq } from "./_components/faq";
 import { Footer } from "./_components/footer";
 import { Hero } from "./_components/hero";
 import { Services } from "./_components/services";
@@ -12,6 +13,7 @@ export default function Home() {
         <Hero />
         <About />
         <Services />
+        <Faq />
         <Testimonials />
       </main>
       <Footer />

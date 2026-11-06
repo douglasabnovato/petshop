@@ -70,3 +70,12 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Foco visível em duas cores (contorno escuro por fora, anel branco por dentro): contrasta no fundo branco, no vermelho e no azul-escuro dos cartões.
+   "html body" vence utilitários como outline-none. */
+html body :focus-visible {
+  outline: 3px solid #111827;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #fff;
+}
+/* Fim de globals.css */
