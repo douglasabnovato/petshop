@@ -9,6 +9,9 @@ export const site = {
   address: "Rua X, Centro, Campo Grande - MS",
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=Centro%2C+Campo+Grande+-+MS",
   openingHours: "Segunda a sábado, das 8h às 18h",
+  /* Mesmo horário no formato do schema.org (dados estruturados) */
+  openingHoursSchema: ["Mo-Sa 08:00-18:00"],
+  addressParts: { street: "Rua X, Centro", city: "Campo Grande", region: "MS", country: "BR" },
   social: [
     { name: "Facebook", url: "" },
     { name: "Instagram", url: "" },
