@@ -2,9 +2,11 @@
 
 > Revisto em 06/11/2026 (ciclo de 03/11/2026). Nível: **Estudo (N1)**. Critérios 5 e 7 não se aplicam em N1 e saem da conta. Testado no Windows (Node 24) e no CI (Ubuntu, Node 22). Não houve teste com pessoas nem em aparelho real.
 
-**Finalizado: sim.** Os critérios aplicáveis atendem, exceto o 10, que depende do responsável e tem a issue #10 (`depende-do-responsavel`).
+**Resumo:** 10 de 10 aplicáveis atendidos
 
-## 1. Critérios: 9 de 10 aplicáveis atendidos (1 parcial)
+**Finalizado:** sim. Todos os critérios aplicáveis atendem. O 10 passou a "Atende" em 10/11/2026, com a `main` protegida pelo ruleset `principal-protegida` (#10). Ligar o Pages segue com o responsável (#11); o workflow de publicação já está pronto.
+
+## 1. Critérios: 10 de 10 aplicáveis atendidos
 
 | # | Critério | Como verificar | Situação | Evidência (06/11/2026) |
 |---|---|---|---|---|
@@ -17,7 +19,7 @@
 | 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não se aplica (N1) | Sem publicação: o endereço do Pages responde 404 (#11). |
 | 8 | Acessibilidade básica | axe e teclado | Atende | Playwright no CI: contorno sólido de 2 px ou mais em todas as tabulações de `/`, `/sobre` e `/contatos`; axe WCAG 2.2 AA sem violações nas 3 (#8). |
 | 9 | Segurança e conformidade | Riscos decididos | Atende | `npm audit` sem alertas; JSON-LD com `<` escapado e teste. |
-| 10 | Entrega confiável | CI verde antes de entrar na principal | Parcial | CI em PR para `main` e `developer/**`; a `main` segue sem proteção (#10, responsável). |
+| 10 | Entrega confiável | CI verde antes de entrar na principal | Atende | `gh api repos/douglasabnovato/petshop/rulesets`, em 10/11/2026: ruleset `principal-protegida` ativo (exige PR, bloqueia force push e exclusão); workflow `CI` roda nos PRs para `main` e `developer/**` (#10). |
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende | Vitest (WhatsApp, JSON-LD, FAQ) e Playwright (foco, axe, FAQ, JSON-LD) no workflow `CI`. |
 | 12 | Documentação honesta | O README ensina a rodar | Atende | Comandos conferidos com o `package.json`; sem link publicado enquanto o Pages não responder. |
 
