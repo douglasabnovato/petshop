@@ -24,7 +24,7 @@ Publicar, sem custo e com deploy automático, uma landing page em Next.js 16 (Ap
 | `basePath` só no build (no `npm run dev` o site continua em `http://localhost:3000/`) | `next.config.ts` | Não mudar o fluxo de desenvolvimento |
 | `site.url` = `https://douglasabnovato.github.io/petshop/` | `src/config/site.ts` | Metadados de SEO e a imagem de compartilhamento (`og:image`) apontam para o endereço real |
 | Script `start` removido | `package.json` | `next start` não funciona com exportação estática |
-| Job `deploy` no CI (Pages por Actions) | `ci/github-actions-ci.yml` → mover para `.github/workflows/ci.yml` | Testes + build a cada push; publicação só na `main` |
+| Job `deploy` no CI (Pages por Actions) | `.github/workflows/ci.yml` (movido de `ci/` em 10/11/2026) | Testes + build a cada push; publicação só na `main` |
 | Seção "Em produção" e publicação atualizada | `README.md` | Endereço e hospedagem visíveis |
 
 Verificação feita antes da entrega: `npm ci` limpo, 2 testes passando, `next build` gerando `out/` com as 3 páginas, `npm audit --omit=dev` com 0 vulnerabilidades, e navegação real no Chromium servindo `out/` em `/petshop/`: as 3 páginas respondem 200, os links do rodapé navegam, nenhuma imagem quebrada, console sem erros.
@@ -54,6 +54,8 @@ Verificação feita antes da entrega: `npm ci` limpo, 2 testes passando, `next b
 
 ### Etapa 2 · Subir para o GitHub (branch `main`)
 
+> Atualização de 10/11/2026: o workflow já está em `.github/workflows/ci.yml`, e a `main` só recebe mudanças por PR. Resta a etapa 3 (ligar o Pages) e o responsável mesclar o PR da sprint na `main`. Os passos abaixo ficam como histórico.
+
 1. Limpeza opcional do scaffold do shadcn e de imagens sem uso (validado: testes e build continuam passando):
    `git rm src/components/ui/button.tsx src/lib/utils.ts components.json public/file.svg public/globe.svg public/next.svg public/vercel.svg public/window.svg public/bg-hero.png`
    `npm uninstall @radix-ui/react-slot class-variance-authority clsx tailwind-merge`
@@ -67,7 +69,7 @@ Verificação feita antes da entrega: `npm ci` limpo, 2 testes passando, `next b
 ### Etapa 3 · Ativar o GitHub Pages
 
 1. No repositório, **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-2. Aba **Actions**: o workflow **CI** roda os jobs `web` (testes e build) e `deploy`. Se o `deploy` falhou porque o Pages ainda não estava ativo, clique em **Re-run all jobs** (ou **Run workflow** na `main`).
+2. Aba **Actions**: o workflow **CI** roda os jobs `raiz` (testes, build e Playwright) e `deploy`. Se o `deploy` falhou porque o Pages ainda não estava ativo, clique em **Re-run all jobs** (ou **Run workflow** na `main`).
 3. Não há variável nem segredo a cadastrar.
 
 ### Etapa 4 · Conferir no ar

@@ -6,10 +6,11 @@ Landing page de um pet shop (projeto de estudo baseado no canal Sujeito Programa
 
 ## Estado e próximos passos (ciclo de 03/11/2026)
 
-Projeto de estudo (N1). Finalizado: sim, com a proteção da `main` pendente do responsável (#10).
+Projeto de estudo (N1). Critérios: 10 de 10 aplicáveis atendidos em 10/11/2026. Finalizado: sim. A `main` está protegida desde 10/11/2026 e só recebe mudanças por PR.
 
 **O que foi feito**
 
+- `main` protegida pelo ruleset `principal-protegida` (critério 10 atende) e workflow único com publicação no Pages só na `main` (10/11/2026)
 - Versão 1.0: Next 16, links reais de contato, depoimentos marcados como ilustrativos, axe sem violações (#6, #7)
 - Foco visível em duas cores em todas as tabulações, com teste Playwright e axe no CI (PR deste ciclo, fecha #8)
 - Perguntas frequentes e dados estruturados PetStore (JSON-LD), com testes (PR deste ciclo, fecha #9)
@@ -17,8 +18,7 @@ Projeto de estudo (N1). Finalizado: sim, com a proteção da `main` pendente do 
 
 **O que queremos fazer**
 
-- [#10](https://github.com/douglasabnovato/petshop/issues/10) Proteger a `main` com PR e CI obrigatórios (responsável)
-- [#11](https://github.com/douglasabnovato/petshop/issues/11) Publicar no GitHub Pages (responsável). Hoje o endereço responde 404, por isso não há link publicado aqui
+- [#11](https://github.com/douglasabnovato/petshop/issues/11) Publicar no GitHub Pages (responsável liga o Pages; o workflow já está pronto). Hoje o endereço responde 404, por isso não há link publicado aqui
 - [#12](https://github.com/douglasabnovato/petshop/issues/12) Pedido de agendamento pelo WhatsApp
 - [#13](https://github.com/douglasabnovato/petshop/issues/13) Aviso de aberto agora
 - [#14](https://github.com/douglasabnovato/petshop/issues/14) Carrosséis acessíveis por teclado
