@@ -1,4 +1,4 @@
-/* Servidor estático mínimo para os testes: serve out/ em /petshop/, como no GitHub Pages */
+/* Servidor estático mínimo para os testes: serve out/ em /petshop/ e, para endereço sem arquivo, o 404.html com status 404, como no GitHub Pages */
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
@@ -16,7 +16,11 @@ createServer(async (req, res) => {
     if ((await stat(arq)).isDirectory()) arq = join(arq, "index.html");
     res.writeHead(200, { "content-type": tipos[extname(arq)] || "application/octet-stream" }).end(await readFile(arq));
   } catch {
-    res.writeHead(404).end();
+    try {
+      res.writeHead(404, { "content-type": tipos[".html"] }).end(await readFile(join(raiz, "404.html")));
+    } catch {
+      res.writeHead(404).end();
+    }
   }
 }).listen(Number(process.env.PORT || 4174));
 /* Fim de servidor.mjs */
