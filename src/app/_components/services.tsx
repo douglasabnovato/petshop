@@ -41,10 +41,10 @@ export function Services() {
                         </div>
                         <a target="_blank" rel="noopener noreferrer"
                           href={whatsappLink(`Olá, vim pelo site e gostaria de mais informações sobre ${item.title}.`)}
-                          className="flex items-center justify-center gap-2 hover:bg-red-700 px-4 py-1 rounded-md duration-300"
-                          aria-label={`Falar sobre ${item.title} pelo WhatsApp (abre em nova aba)`}>
+                          className="flex items-center justify-center gap-2 hover:bg-red-700 px-4 py-1 rounded-md duration-300">
                           <WhatsappLogo className="w-5 h-5" aria-hidden="true" />
-                          Entrar em contato
+                          {/* Nome acessível começa pelo texto visível (WCAG 2.5.3); o resto só para leitor de tela */}
+                          <span>Entrar em contato<span className="sr-only"> sobre {item.title} pelo WhatsApp (abre em nova aba)</span></span>
                         </a>
                       </div>
                     </article>

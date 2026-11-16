@@ -1,4 +1,4 @@
-# Verificação de projeto de estudo: não publica nada
+# CI: testes, build do Next.js (exportação estática em out/) e Playwright em PR e push; publicação no GitHub Pages só na main, depois do build verde e com a variável PAGES_VIA_ACTIONS=true
 name: CI
 
 on:
@@ -6,6 +6,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main, 'developer/**']
+  # "Run workflow" na main republica o site (ex.: depois de ligar o Pages)
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,9 +15,6 @@ permissions:
 jobs:
   raiz:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,3 +27,27 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test
+      # Artefato do Pages só na main (push ou "Run workflow") e com o Pages ligado pelo responsável
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && vars.PAGES_VIA_ACTIONS == 'true'
+        with:
+          path: out
+
+  # Publicação: só na main, depois do job raiz verde, e só com a variável PAGES_VIA_ACTIONS=true
+  # (criada pelo responsável ao ligar o Pages; sem ela o job fica pulado e a main não fica vermelha)
+  deploy:
+    needs: raiz
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && vars.PAGES_VIA_ACTIONS == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

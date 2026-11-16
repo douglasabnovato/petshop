@@ -8,8 +8,9 @@ import { whatsappLink } from "../../lib/whatsapp";
 import { site } from "../../config/site";
 
 export function About() {
+  /* overflow-x-clip: o estado inicial do AOS (fade-up-left/right) desloca os blocos 100 px e criava rolagem horizontal no celular */
   return (
-    <section className="bg-[#FDF6ec] py-16" aria-labelledby="sobre-title">
+    <section className="bg-[#FDF6ec] py-16 overflow-x-clip" aria-labelledby="sobre-title">
       <div className="container px-4 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative" data-aos="fade-up-right" data-aos-delay="300">
