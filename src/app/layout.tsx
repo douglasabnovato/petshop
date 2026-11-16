@@ -13,9 +13,15 @@ export const metadata: Metadata = {
   openGraph: { title: site.name, description: site.description, locale: "pt_BR", type: "website", images: ["/foto-hero.webp"] },
 };
 
+/* Roda antes do primeiro desenho: liga o estado inicial do AOS e desliga de novo se os scripts do app não chegarem em 2,5 s */
+const aosAntesDaPintura = `document.documentElement.classList.add("aos-ativo");setTimeout(function(){if(!window.__aosPronto)document.documentElement.classList.remove("aos-ativo")},2500);`;
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: aosAntesDaPintura }} />
+      </head>
       <body className={`${GeistSans.variable} font-sans antialiased`}>
         <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">
           Pular para o conteúdo
