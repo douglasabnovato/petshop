@@ -6,7 +6,7 @@ Landing page de um pet shop (projeto de estudo baseado no canal Sujeito Programa
 
 ## Estado e próximos passos (ciclo de 16/11/2026)
 
-Projeto de estudo (N1). Critérios: 9 de 10 aplicáveis atendidos em 16/11/2026. Finalizado: sim. O critério 9 está "Parcial" porque os alertas do Dependabot estão desligados, o que só o responsável liga (#21). A `main` está protegida e só recebe mudanças por PR com o check `raiz` verde.
+Projeto de estudo (N1). Critérios: 10 de 10 aplicáveis atendidos em 16/11/2026. Finalizado: sim. O critério 9 atende desde 16/11/2026: com os alertas do Dependabot ligados (#21), há 0 alertas abertos e o `npm audit --omit=dev` dá 0. A `main` está protegida e só recebe mudanças por PR com o check `raiz` verde.
 
 **O que foi feito**
 
@@ -18,7 +18,7 @@ Projeto de estudo (N1). Critérios: 9 de 10 aplicáveis atendidos em 16/11/2026.
 **O que queremos fazer**
 
 - [#11](https://github.com/douglasabnovato/petshop/issues/11) Publicar no GitHub Pages: o responsável liga o Pages e cria a variável `PAGES_VIA_ACTIONS`. Hoje o endereço responde 404, por isso não há link publicado aqui
-- [#21](https://github.com/douglasabnovato/petshop/issues/21) Ligar os alertas do Dependabot (responsável)
+- [#21](https://github.com/douglasabnovato/petshop/issues/21) Ligar os alertas do Dependabot (ligados pelo responsável em 16/11/2026, com 0 alertas abertos; a issue fica para ele fechar)
 - [#12](https://github.com/douglasabnovato/petshop/issues/12) Pedido de agendamento pelo WhatsApp
 - [#13](https://github.com/douglasabnovato/petshop/issues/13) Aviso de aberto agora
 - [#14](https://github.com/douglasabnovato/petshop/issues/14) Carrosséis acessíveis por teclado
