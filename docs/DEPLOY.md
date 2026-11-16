@@ -25,9 +25,10 @@ Publicar, sem custo e com deploy automático, uma landing page em Next.js 16 (Ap
 | `site.url` = `https://douglasabnovato.github.io/petshop/` | `src/config/site.ts` | Metadados de SEO e a imagem de compartilhamento (`og:image`) apontam para o endereço real |
 | Script `start` removido | `package.json` | `next start` não funciona com exportação estática |
 | Job `deploy` no CI (Pages por Actions) | `.github/workflows/ci.yml` (movido de `ci/` em 10/11/2026) | Testes + build a cada push; publicação só na `main` |
+| Job `deploy` e envio do artefato só com a variável `PAGES_VIA_ACTIONS=true` | `.github/workflows/ci.yml` (16/11/2026) | Com o Pages desligado, o deploy falharia e deixaria a `main` vermelha. Sem a variável, o job fica pulado; ela liga a publicação junto com o Pages |
 | Seção "Em produção" e publicação atualizada | `README.md` | Endereço e hospedagem visíveis |
 
-Verificação feita antes da entrega: `npm ci` limpo, 2 testes passando, `next build` gerando `out/` com as 3 páginas, `npm audit --omit=dev` com 0 vulnerabilidades, e navegação real no Chromium servindo `out/` em `/petshop/`: as 3 páginas respondem 200, os links do rodapé navegam, nenhuma imagem quebrada, console sem erros.
+Verificação feita antes da primeira entrega (registro antigo; a verificação atual está na Etapa 1): `npm ci` limpo, 2 testes passando, `next build` gerando `out/` com as 3 páginas, `npm audit --omit=dev` com 0 vulnerabilidades, e navegação real no Chromium servindo `out/` em `/petshop/`: as 3 páginas respondem 200, os links do rodapé navegam, nenhuma imagem quebrada, console sem erros.
 
 ### Limitações do plano gratuito
 
@@ -46,15 +47,16 @@ Verificação feita antes da entrega: `npm ci` limpo, 2 testes passando, `next b
 
 ### Etapa 1 · Validar localmente (Git Bash)
 
-1. `cd /c/ambiente-projeto/ser-mvp/petshop`
+1. Na pasta do clone: `cd petshop`
 2. `npm install` (Next 16 exige Node 20.9+; use o Node 22)
-3. `npm test` (esperado: 2 testes passando)
+3. `npm test` (esperado em 16/11/2026: 6 testes Vitest passando)
 4. `npm run build` (esperado: pasta `out/` com `index.html`, `sobre/`, `contatos/` e `404.html`)
-5. `npm run dev` e conferir `http://localhost:3000/`, `/sobre` e `/contatos`.
+5. `npx playwright install chromium` (uma vez) e `npx playwright test` (teste no navegador contra o `out/`)
+6. `npm run dev` e conferir `http://localhost:3000/`, `/sobre` e `/contatos`.
 
 ### Etapa 2 · Subir para o GitHub (branch `main`)
 
-> Atualização de 10/11/2026: o workflow já está em `.github/workflows/ci.yml`, e a `main` só recebe mudanças por PR. Resta a etapa 3 (ligar o Pages) e o responsável mesclar o PR da sprint na `main`. Os passos abaixo ficam como histórico.
+> Atualização de 16/11/2026: o workflow já está em `.github/workflows/ci.yml`, e a `main` só recebe mudanças por PR. Resta a etapa 3 (ligar o Pages e criar a variável `PAGES_VIA_ACTIONS`) e o responsável mesclar o PR da sprint na `main` (#19). Sem a variável, o merge deixa a `main` verde, com o `deploy` pulado. Crie a variável só depois de ligar o Pages; antes disso, o `deploy` falha. Os passos abaixo ficam como histórico.
 
 1. Limpeza opcional do scaffold do shadcn e de imagens sem uso (validado: testes e build continuam passando):
    `git rm src/components/ui/button.tsx src/lib/utils.ts components.json public/file.svg public/globe.svg public/next.svg public/vercel.svg public/window.svg public/bg-hero.png`
@@ -66,11 +68,20 @@ Verificação feita antes da entrega: `npm ci` limpo, 2 testes passando, `next b
 5. `git commit -m "feat(deploy): exportação estática do Next e publicação no GitHub Pages por Actions"`
 6. `git push origin main`
 
-### Etapa 3 · Ativar o GitHub Pages
+### Etapa 3 · Ativar o GitHub Pages e a publicação
 
-1. No repositório, **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-2. Aba **Actions**: o workflow **CI** roda os jobs `raiz` (testes, build e Playwright) e `deploy`. Se o `deploy` falhou porque o Pages ainda não estava ativo, clique em **Re-run all jobs** (ou **Run workflow** na `main`).
-3. Não há variável nem segredo a cadastrar.
+São dois passos do responsável, nesta ordem. Sem os dois, o job `deploy` fica pulado (cinza) e nada é publicado.
+
+1. **Settings → Pages → Build and deployment → Source**: escolher **GitHub Actions**. Não há mais nada a salvar nessa tela.
+2. **Settings → Secrets and variables → Actions → aba Variables → New repository variable**:
+   - Name: `PAGES_VIA_ACTIONS`
+   - Value: `true`
+   - Clicar em **Add variable**.
+   - É uma variável (aba **Variables**), não um segredo. O valor tem de ser `true`, em minúsculas: o workflow compara `vars.PAGES_VIA_ACTIONS == 'true'`, e sem a variável o valor é texto vazio.
+3. **Actions → CI → Run workflow**, branch `main`, **Run workflow**. Os jobs `raiz` e `deploy` devem ficar verdes. Se o `deploy` falhar, conferir o passo 1 e clicar em **Re-run failed jobs**.
+4. Para pausar a publicação sem mexer no código: apagar a variável ou trocar o valor para `false`.
+
+Não há segredo a cadastrar.
 
 ### Etapa 4 · Conferir no ar
 
