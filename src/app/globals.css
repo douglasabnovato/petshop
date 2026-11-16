@@ -79,3 +79,11 @@ html body :focus-visible {
   box-shadow: 0 0 0 2px #fff;
 }
 /* Fim de globals.css */
+
+/* Sem JavaScript (ou se os scripts falharem ao baixar), os blocos do AOS ficam visíveis.
+   A AosInit põe a classe aos-ativo no <html> antes de iniciar o AOS; só então a animação de entrada esconde e mostra os blocos.
+   O seletor (0,2,1) vence o [data-aos^=fade][data-aos^=fade] (0,2,0) do aos.css. */
+html:not(.aos-ativo) [data-aos] {
+  opacity: 1;
+  transform: none;
+}
