@@ -59,11 +59,12 @@ Timebox: 40 min.
 **Riscos.**
 - O clique no WhatsApp abre um site de fora: o teste intercepta `wa.me` com `context.route` e não sai da máquina.
 - Porta fixa 4174 pode servir o site de outro processo com `reuseExistingServer`; a porta passa a vir de `PORT`.
-- Mostrar o bloco do AOS antes do JavaScript não pode piscar: a regra só vale enquanto o `html` não tem a classe `aos-ativo`.
+- Mostrar o bloco do AOS sem JavaScript não pode piscar com JavaScript. A revisão independente do #20 achou o pisca na primeira versão; a classe `aos-ativo` passou a entrar por script inline no `<head>`, antes do primeiro desenho, e sai se os scripts do app não chegarem em 2,5 s.
+- O estado inicial do AOS (`fade-up-left`) criava rolagem horizontal de 459 px em 375 px; a seção Sobre ganhou `overflow-x-clip`.
 - O check exigido pelo ruleset é `raiz`; o Playwright continua nesse job para não travar o merge.
 
 **Qualidade.**
-- Testes: Vitest (6) e Playwright (fluxo, 404, sem JavaScript, celular, axe e foco).
+- Testes: Vitest (6) e Playwright (21: fluxo, 404, AOS sem JavaScript e sem piscar, celular, axe e foco).
 - Acessibilidade: axe WCAG 2.2 AA nas 3 páginas, na 404 e em 375 px; regra 2.5.3 ligada à parte.
 - Segurança: `npm audit --omit=dev` e o Dependabot (hoje desligado, por isso critério 9 "Parcial").
 

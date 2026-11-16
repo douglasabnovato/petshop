@@ -69,13 +69,9 @@ Todos os dados do negócio ficam em `src/config/site.ts`: nome, WhatsApp (com DD
 
 O site é exportado como HTML estático (`output: 'export'` em `next.config.ts`), pronto para o GitHub Pages. O workflow `CI` roda testes, build e Playwright em todo PR. O job `deploy` publica no Pages só na `main` e só com a variável `PAGES_VIA_ACTIONS=true`; sem ela, fica pulado. Ligar o Pages e criar a variável é do responsável (#11). Se o nome do repositório ou o endereço mudar, ajuste `repoBasePath` em `next.config.ts` e `site.url` em `src/config/site.ts`. Detalhes em [docs/DEPLOY.md](docs/DEPLOY.md).
 
-## Qualidade (v1.0, medição antiga sem data; a atual está em docs/MVP.md)
+## Qualidade
 
-| Medida | Resultado |
-|---|---|
-| Lighthouse (mobile) | Desempenho 98 · Acessibilidade 100 · Boas práticas 96 · SEO 100 |
-| axe-core (WCAG 2.2 AA) | 0 violações em /, /sobre e /contatos |
-| `npm audit` | 0 vulnerabilidades |
+A avaliação atual, com comando, data e resultado de cada critério, está em [docs/MVP.md](docs/MVP.md). A medição da versão 1.0 (Lighthouse e axe, sem data) ficou em [docs/ANALISE.md](docs/ANALISE.md).
 
 Detalhes em [docs/ANALISE.md](docs/ANALISE.md), [docs/ARQUITETURA.md](docs/ARQUITETURA.md) e [docs/PLANO-DE-ACAO.md](docs/PLANO-DE-ACAO.md).
 

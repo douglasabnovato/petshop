@@ -80,6 +80,7 @@ São dois passos do responsável, nesta ordem. Sem os dois, o job `deploy` fica 
    - É uma variável (aba **Variables**), não um segredo. O valor tem de ser `true`, em minúsculas: o workflow compara `vars.PAGES_VIA_ACTIONS == 'true'`, e sem a variável o valor é texto vazio.
 3. **Actions → CI → Run workflow**, branch `main`, **Run workflow**. Os jobs `raiz` e `deploy` devem ficar verdes. Se o `deploy` falhar, conferir o passo 1 e clicar em **Re-run failed jobs**.
 4. Para pausar a publicação sem mexer no código: apagar a variável ou trocar o valor para `false`.
+5. O `deploy` só roda na `main`. **Run workflow** em outra branch deixa o job pulado, sem erro; o ambiente `github-pages` também só aceita a `main`.
 
 Não há segredo a cadastrar.
 
