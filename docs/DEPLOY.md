@@ -56,6 +56,8 @@ Verificação feita antes da primeira entrega (registro antigo; a verificação 
 
 ### Etapa 2 · Subir para o GitHub (branch `main`)
 
+> Atualização de 18/11/2026: o Pages está ligado com a origem "GitHub Actions" (`gh api repos/douglasabnovato/petshop/pages --jq .build_type` → `workflow`), e o run 43929173198 (push na `main`, 16/11/2026) publicou o site com os jobs `raiz` e `deploy` verdes. `/petshop/`, `/petshop/sobre/` e `/petshop/contatos/` responderam 200 em 18/11/2026. Todas as etapas abaixo estão cumpridas.
+
 > Atualização de 16/11/2026: o workflow já está em `.github/workflows/ci.yml`, e a `main` só recebe mudanças por PR. Resta a etapa 3 (ligar o Pages e criar a variável `PAGES_VIA_ACTIONS`) e o responsável mesclar o PR da sprint na `main` (#19). Sem a variável, o merge deixa a `main` verde, com o `deploy` pulado. Crie a variável só depois de ligar o Pages; antes disso, o `deploy` falha. Os passos abaixo ficam como histórico.
 
 1. Limpeza opcional do scaffold do shadcn e de imagens sem uso (validado: testes e build continuam passando):
