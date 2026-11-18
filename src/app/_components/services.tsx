@@ -1,9 +1,9 @@
 "use client";
-/* Carrossel de serviços com contato por WhatsApp já com o nome do serviço */
-import useEmblaCarousel from "embla-carousel-react";
+/* Carrossel de serviços com contato por WhatsApp já com o nome do serviço; acessível por teclado (slides fora da tela inert, botões param nas pontas) */
 import { ChevronLeft, ChevronRight, Scissors, Syringe, CarTaxiFront, Hotel, Clock } from "lucide-react";
 import { WhatsappLogo } from "@phosphor-icons/react";
 import { whatsappLink } from "../../lib/whatsapp";
+import { useCarrossel } from "./use-carrossel";
 
 const services = [
   { title: "Banho & Tosa", description: "Inclui banho com produtos específicos para o tipo de pelagem e pele do animal, corte de unhas, limpeza das orelhas e tosa personalizada (higiênica ou estilizada).", duration: "1h", icon: Scissors },
@@ -13,7 +13,7 @@ const services = [
 ];
 
 export function Services() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: "start", slidesToScroll: 1, breakpoints: { "(min-width: 768px)": { slidesToScroll: 3 } } });
+  const [emblaRef, c] = useCarrossel({ align: "start", slidesToScroll: 1, breakpoints: { "(min-width: 768px)": { slidesToScroll: 3 } } });
 
   return (
     <section className="bg-white py-16" aria-labelledby="servicos-title" aria-roledescription="carrossel">
@@ -22,10 +22,10 @@ export function Services() {
         <div className="relative">
           <div className="overflow-hidden" ref={emblaRef}>
             <ul className="flex">
-              {services.map((item) => {
+              {services.map((item, i) => {
                 const Icon = item.icon;
                 return (
-                  <li key={item.title} className="flex-[0_0_100%] min-w-0 md:flex-[0_0_calc(100%/3)] px-3">
+                  <li key={item.title} inert={c.foraDaTela(i)} className="flex-[0_0_100%] min-w-0 md:flex-[0_0_calc(100%/3)] px-3">
                     <article className="bg-[#1e293b] text-white rounded-2xl p-6 space-y-4 h-full flex flex-col">
                       <div className="flex-1 flex gap-3">
                         <Icon className="w-8 h-8 shrink-0" aria-hidden="true" />
@@ -53,10 +53,11 @@ export function Services() {
               })}
             </ul>
           </div>
-          <button type="button" aria-label="Serviços anteriores" className="bg-white flex items-center justify-center rounded-full shadow-lg w-10 h-10 absolute left-3 -translate-y-1/2 -translate-x-1/2 top-1/2 z-10" onClick={() => emblaApi?.scrollPrev()}>
+          <p aria-live="polite" className="sr-only">{c.posicao}</p>
+          <button data-carrossel="anterior" type="button" aria-label="Serviços anteriores" disabled={!c.podeVoltar} className="disabled:opacity-40 disabled:cursor-not-allowed bg-white flex items-center justify-center rounded-full shadow-lg w-10 h-10 absolute left-3 -translate-y-1/2 -translate-x-1/2 top-1/2 z-10" onClick={c.voltar}>
             <ChevronLeft className="w-6 h-6 text-gray-700" aria-hidden="true" />
           </button>
-          <button type="button" aria-label="Próximos serviços" className="bg-white flex items-center justify-center rounded-full shadow-lg w-10 h-10 absolute -right-6 -translate-y-1/2 -translate-x-1/2 top-1/2 z-10" onClick={() => emblaApi?.scrollNext()}>
+          <button data-carrossel="proximo" type="button" aria-label="Próximos serviços" disabled={!c.podeAvancar} className="disabled:opacity-40 disabled:cursor-not-allowed bg-white flex items-center justify-center rounded-full shadow-lg w-10 h-10 absolute -right-6 -translate-y-1/2 -translate-x-1/2 top-1/2 z-10" onClick={c.avancar}>
             <ChevronRight className="w-6 h-6 text-gray-700" aria-hidden="true" />
           </button>
         </div>
