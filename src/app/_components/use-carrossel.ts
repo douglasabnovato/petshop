@@ -2,15 +2,15 @@
 /* Carrossel acessível por teclado: slides fora da tela ficam inert, os botões param nas pontas e um texto anuncia a posição */
 import { useCallback, useEffect, useRef, useState } from "react";
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
-import { textoPosicao } from "../../lib/carrossel";
+import { slidesNaTela, textoPosicao } from "../../lib/carrossel";
 
 /* Tipos tirados do embla-carousel-react, que é a dependência direta */
 type EmblaCarouselType = NonNullable<UseEmblaCarouselType[1]>;
 type EmblaOptionsType = NonNullable<Parameters<typeof useEmblaCarousel>[0]>;
 
 export function useCarrossel(opcoes: EmblaOptionsType) {
-  /* Sem loop: as pontas existem e os botões podem ficar desabilitados. Slide "na tela" a partir de 60% visível */
-  const [emblaRef, emblaApi] = useEmblaCarousel({ ...opcoes, loop: false, inViewThreshold: 0.6 });
+  /* Sem loop: as pontas existem e os botões podem ficar desabilitados */
+  const [emblaRef, emblaApi] = useEmblaCarousel({ ...opcoes, loop: false });
   const [podeVoltar, setPodeVoltar] = useState(false);
   const [podeAvancar, setPodeAvancar] = useState(true);
   /* null antes do JavaScript: sem ele, nenhum slide fica inert */
@@ -32,9 +32,12 @@ export function useCarrossel(opcoes: EmblaOptionsType) {
     setPodeAvancar(avancar);
   }, []);
 
+  /* Mede pela posição na tela depois de o carrossel parar (settle) ou de remontar (reInit): sem estados no meio da animação
+     e sem o mapa vazio do IntersectionObserver logo depois do reInit */
   const aoMudarVisiveis = useCallback((api: EmblaCarouselType) => {
-    setVisiveis(api.slidesInView());
-    setTotal(api.slideNodes().length);
+    const slides = api.slideNodes();
+    setVisiveis(slidesNaTela(api.rootNode().getBoundingClientRect(), slides.map((s) => s.getBoundingClientRect())));
+    setTotal(slides.length);
   }, []);
 
   useEffect(() => {
@@ -45,11 +48,11 @@ export function useCarrossel(opcoes: EmblaOptionsType) {
       aoMudarVisiveis(emblaApi);
     });
     emblaApi.on("select", aoSelecionar).on("reInit", aoSelecionar);
-    emblaApi.on("slidesInView", aoMudarVisiveis).on("reInit", aoMudarVisiveis);
+    emblaApi.on("settle", aoMudarVisiveis).on("reInit", aoMudarVisiveis);
     return () => {
       cancelAnimationFrame(quadro);
       emblaApi.off("select", aoSelecionar).off("reInit", aoSelecionar);
-      emblaApi.off("slidesInView", aoMudarVisiveis).off("reInit", aoMudarVisiveis);
+      emblaApi.off("settle", aoMudarVisiveis).off("reInit", aoMudarVisiveis);
     };
   }, [emblaApi, aoSelecionar, aoMudarVisiveis]);
 

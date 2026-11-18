@@ -89,12 +89,39 @@ test("depoimentos: sem loop, um de cada vez, com a posição anunciada", async (
   await expect(regiao.getByRole("listitem").nth(0)).toHaveAttribute("inert", "");
 });
 
-test("axe sem violações com os carrosséis no fim", async ({ page }) => {
+test("axe sem violações com os dois carrosséis no fim", async ({ page }) => {
   await page.goto("./");
   await servicos(page).getByRole("button", { name: "Próximos serviços" }).click();
   await expect(servicos(page).locator("[aria-live=polite]")).toHaveText("Slides 2 a 4 de 4");
+  const proximo = depoimentos(page).getByRole("button", { name: "Próximo depoimento" });
+  await proximo.click();
+  await expect(depoimentos(page).locator("[aria-live=polite]")).toHaveText("Slide 2 de 3");
+  await proximo.click();
+  await expect(depoimentos(page).locator("[aria-live=polite]")).toHaveText("Slide 3 de 3");
+  await expect(proximo).toBeDisabled();
   await semAnimacao(page);
   const r = await new AxeBuilder({ page }).withTags(tags).analyze();
   expect(r.violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
 });
+
+test.describe("celular (375 px)", () => {
+  test.use({ viewport: { width: 375, height: 812 } });
+
+  test("serviços um de cada vez: só o slide da tela recebe o Tab", async ({ page }) => {
+    await page.goto("./");
+    const regiao = servicos(page);
+    const aviso = regiao.locator("[aria-live=polite]");
+    await expect(aviso).toHaveText("Slide 1 de 4");
+    for (const i of [1, 2, 3]) await expect(regiao.getByRole("listitem").nth(i)).toHaveAttribute("inert", "");
+    await regiao.getByRole("button", { name: "Próximos serviços" }).click();
+    await expect(aviso).toHaveText("Slide 2 de 4");
+    await expect(regiao.getByRole("listitem").nth(1)).not.toHaveAttribute("inert", "");
+    await expect(regiao.getByRole("listitem").nth(0)).toHaveAttribute("inert", "");
+    /* O único "Entrar em contato" que o Tab alcança é o do slide da tela */
+    const alcancaveis = regiao.locator("li:not([inert]) a");
+    await expect(alcancaveis).toHaveCount(1);
+    await expect(alcancaveis).toHaveAccessibleName(/Consulta Veterinária/);
+  });
+});
+
 /* Fim de carrossel.e2e.ts */
