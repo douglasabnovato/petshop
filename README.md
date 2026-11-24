@@ -58,6 +58,7 @@ npm test        # testes com Vitest
 npm run build   # gera out/ (site estático servido em /petshop)
 npx playwright install chromium   # uma vez
 npx playwright test               # fluxo, 404, foco, carrosséis, axe, FAQ e JSON-LD no navegador (usa o out/; porta em PORT, padrão 4174)
+BASE_URL=https://douglasabnovato.github.io/petshop/ npx playwright test   # os mesmos testes contra o site publicado, sem servidor local
 ```
 
 ## Como personalizar
